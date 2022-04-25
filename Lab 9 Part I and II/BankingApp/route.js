@@ -4,16 +4,14 @@ import BankService from "./service/bank-service.js";
 const router = express.Router();
 const bankService = new BankService()
 
-router.get('/', (req, res) => {
-    res.send('welcome')
-})
-router.get('/api/accounts', bankService.getAccounts)
+router.route('/accounts')
+    .get(bankService.getAccounts)
+    .put(bankService.updateAccount)
+    .post(bankService.addAccount)
 
-router.get('/api/accounts/:acctNo', bankService.getAccount)
-
-router.post('/api/accounts',bankService.addAccount )
-
-router.put('/api/accounts', bankService.updateAccount)
+router.route('/accounts/:acctNo')
+    .get(bankService.getAccount)
+    .delete(bankService.deleteAccount)
 
 // app.put('/api/accounts/:acctNo', async (req, res) => {
 //     const accounts = await fs.readJson(filePath)
@@ -22,8 +20,6 @@ router.put('/api/accounts', bankService.updateAccount)
 //     await fs.writeJson(filePath, accounts)
 //     res.send(`Addition was Successfully made, ${req.body.accountNo}`)
 // })
-
-router.delete('/api/accounts/:acctNo', bankService.deleteAccount)
 
 export default router;
 
