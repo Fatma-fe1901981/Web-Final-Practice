@@ -1,0 +1,36 @@
+<h1>{{title}}</h1>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Contact ID</th>
+        <th>Name</th>
+        <th>Gender</th>
+        <th>DOB</th>
+        <th>Age</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each contents as |c|}}
+        <tr>
+            <td>{{c._id}}</td>
+            <td>{{c.name}}</td>
+            <td>{{c.gender}}</td>
+            <td>{{c.dob}}</td>
+            <td>{{c.age}}</td>
+            <td><button class="btn btn-primary">Add</button></td>
+            <td><button class="btn btn-danger">Delete</button></td>
+        </tr>
+    {{/each}}
+    </tbody>
+</table>
+
+async function getCourses(programCode){
+const data = await fetch(`/api/courses/${programCode}`)
+const courses = await data.json()
+console.log(courses)
+const compiledTemplate = Handlebars.compile(template)
+const htmlTableCode = compiledTemplate(({courses}))
+
+document.querySelector('#course-table').innerHTML = htmlTableCode
+}
